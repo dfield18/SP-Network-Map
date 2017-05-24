@@ -3,6 +3,7 @@
 <meta content="utf-8" http-equiv="encoding">
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 <style>
 .link {
   stroke: #aaa;
@@ -19,6 +20,8 @@ fill:#555;
 </style>
 <body>
 <script>
+var s=document.createElement('script'); s.type='text/javascript'; s.src='http://d3js.org/d3.v3.min.js'; document.head.appendChild(s);
+
 var width = 960,
     height = 500
 var svg = d3.select("body").append("svg")
