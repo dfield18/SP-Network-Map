@@ -11,9 +11,8 @@ text {
 }
 </style>
 <body>
-<script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
 
-
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
 var w = window.innerWidth;
 var h = window.innerHeight;
@@ -52,7 +51,7 @@ var svg = d3.select("body").append("svg");
 var zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom])
 var g = svg.append("g");
 svg.style("cursor","move");
-d3.json("https://raw.githubusercontent.com/dfield18/test/gh-pages/test9.json", function(error, graph) {
+d3.json("https://github.com/dfield18/test/blob/gh-pages/test9.json", function(error, graph) {
 var linkedByIndex = {};
     graph.links.forEach(function(d) {
   linkedByIndex[d.source + "," + d.target] = true;
