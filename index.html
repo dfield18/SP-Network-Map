@@ -22,13 +22,13 @@ var text_center = false;
 var outline = false;
 var min_score = 0;
 var max_score = 1;
-var color = d3.scaleLinear()
+var color = d3.scale.Linear()
   .domain([min_score, (min_score+max_score)/2, max_score])
   .range(["lime", "yellow", "red"]);
 var highlight_color = "blue";
 var highlight_trans = 0.1;
   
-var size = d3.scalePow().exponent(1)
+var size = d3.scale.pow().exponent(1)
   .domain([1,100])
   .range([8,24]);
   
