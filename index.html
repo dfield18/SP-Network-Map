@@ -19,28 +19,30 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 var keyc = true, keys = true, keyt = true, keyr = true, keyx = true, keyd = true, keyl = true, keym = true, keyh = true, key1 = true, key2 = true, key3 = true, key0 = true
 var focus_node = null, highlight_node = null;
-var text_center = false;
+var text_center = true;
 var outline = false;
 var min_score = 0;
 var max_score = 1;
 var color = d3.scale.linear()
   .domain([min_score, (min_score+max_score)/2, max_score])
-  .range(["lime", "yellow", "red"]);
-var highlight_color = "blue";
-var highlight_trans = 0.1;
+  
+  .range(["DeepSkyBlue", "gray", "red", "yellow"]);
+var highlight_color = "gray";
+var color_trans = 0.6;
+var highlight_trans = 0.6;
  
 var size = d3.scale.pow().exponent(1)
   .domain([1,100])
   .range([8,24]);
  
 var force = d3.layout.force()
-  .linkDistance(100)
-  .charge(-100)
+  .linkDistance(50)
+  .charge(-150)
   .size([w,h]);
-var default_node_color = "#ccc";
-//var default_node_color = "rgb(3,190,100)";
+var default_node_color = "#00bfff";
+var default_node_color = "rgb(0, 191, 255, .8)";
 var default_link_color = "#888";
-var nominal_base_node_size = 8;
+var nominal_base_node_size = 10;
 var nominal_text_size = 10;
 var max_text_size = 24;
 var nominal_stroke = 1.5;
@@ -52,7 +54,7 @@ var svg = d3.select("body").append("svg");
 var zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom])
 var g = svg.append("g");
 svg.style("cursor","move");
-d3.json("https://raw.githubusercontent.com/dfield18/test/gh-pages/test9.json", function(error, graph) {
+d3.json("data.json", function(error, graph) {
 var linkedByIndex = {};
 graph.links.forEach(function(d) {
 linkedByIndex[d.source + "," + d.target] = true;
@@ -93,7 +95,8 @@ linkedByIndex[d.source + "," + d.target] = true;
   zoom.translate([dcx,dcy]);
    g.attr("transform", "translate("+ dcx + "," + dcy  + ")scale(" + zoom.scale() + ")");
    
-   
+
+
   });
  
  
@@ -118,23 +121,30 @@ linkedByIndex[d.source + "," + d.target] = true;
   else return default_node_color; })
     .attr("r", function(d) { return size(d.size)||nominal_base_node_size; })
   .style("stroke-width", nominal_stroke)
+  .style("opacity", .6) 
   .style(towhite, "white");
    
        
   var text = g.selectAll(".text")
     .data(graph.nodes)
     .enter().append("text")
-    .attr("dy", ".35em")
+    .attr("dy", ".3em")
   .style("font-size", nominal_text_size + "px")
   if (text_center)
    text.text(function(d) { return d.id; })
   .style("text-anchor", "middle");
   else
   text.attr("dx", function(d) {return (size(d.size)||nominal_base_node_size);})
-    .text(function(d) { return '\u2002'+d.id; });
+    .text(function(d) { return '\u2008'+d.id; });
   node.on("mouseover", function(d) {
   set_highlight(d);
-  })
+
+  }
+
+
+
+
+  )
   .on("mousedown", function(d) { d3.event.stopPropagation();
     focus_node = d;
   set_focus(d)
@@ -191,15 +201,38 @@ if (highlight_trans<1)  {
 }
 function set_highlight(d)
 {
+
+
   svg.style("cursor","pointer");
   if (focus_node!==null) d = focus_node;
   highlight_node = d;
+
+
+
+
+
+
   if (highlight_color!="white")
   {
       circle.style(towhite, function(o) {
                 return isConnected(d, o) ? highlight_color : "white";});
+
+
+
+
+
+
       text.style("font-weight", function(o) {
                 return isConnected(d, o) ? "bold" : "normal";});
+
+// increase text size
+//      text.style("font-size",  function(o) {
+  //             return 40 + "px"});
+
+
+
+
+
             link.style("stroke", function(o) {
           return o.source.index == d.index || o.target.index == d.index ? highlight_color : ((isNumber(o.score) && o.score>=0)?color(o.score):default_link_color);
             });
