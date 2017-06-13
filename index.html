@@ -54,7 +54,7 @@ var svg = d3.select("body").append("svg");
 var zoom = d3.behavior.zoom().scaleExtent([min_zoom,max_zoom])
 var g = svg.append("g");
 svg.style("cursor","move");
-d3.json("https://raw.githubusercontent.com/dfield18/test/gh-pages/test9.json", function(error, graph) {
+d3.json("https://raw.githubusercontent.com/dfield18/test/gh-pages/nodes100.json", function(error, graph) {
 var linkedByIndex = {};
 graph.links.forEach(function(d) {
 linkedByIndex[d.source + "," + d.target] = true;
